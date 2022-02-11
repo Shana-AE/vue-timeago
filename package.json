@@ -14,7 +14,8 @@
     "test": "xo && npm run build",
     "build": "bili",
     "prepublishOnly": "npm run build",
-    "example": "poi example/index.js -so"
+    "example": "poi example/index.js -so",
+    "prepare": "bili"
   },
   "main": "dist/vue-timeago.cjs.js",
   "module": "dist/vue-timeago.es.js",
@@ -29,8 +30,12 @@
     "vue",
     "filter"
   ],
+  "peerDependencies": {
+    "vue": ">=3.0.0"
+  },
   "devDependencies": {
     "@egoist/vue-to-react": "^1.1.0",
+    "@vue/compiler-sfc": "^3.2.30",
     "bili": "^4.7.0",
     "commitizen": "^3.0.7",
     "cz-conventional-changelog": "^2.1.0",
@@ -46,8 +51,7 @@
     "prettier": "^1.16.4",
     "raw-loader": "^3.0.0",
     "semantic-release": "^17.3.6",
-    "vue": "^2.6.9",
-    "vue-template-compiler": "^2.6.9",
+    "vue": "^3.0.0",
     "xo": "^0.24.0"
   },
   "xo": {

@@ -1,3 +1,4 @@
+import { h, reactive } from 'vue'
 import defaultConverter from './converter'
 
 export const createTimeago = (opts = {}) => {
@@ -48,19 +49,17 @@ export const createTimeago = (opts = {}) => {
       this.stopUpdater()
     },
 
-    render(h) {
+    render() {
       return h(
         'time',
         {
-          attrs: {
-            datetime: new Date(this.datetime).toISOString(),
-            title:
-              typeof this.title === 'string'
-                ? this.title
-                : this.title === false
-                ? null
-                : this.timeago
-          }
+          datetime: new Date(this.datetime).toISOString(),
+          title:
+            typeof this.title === 'string'
+              ? this.title
+              : this.title === false
+              ? null
+              : this.timeago
         },
         [this.timeago]
       )
@@ -124,24 +123,22 @@ export const createTimeago = (opts = {}) => {
   }
 }
 
-export const install = (Vue, opts) => {
-  if (Vue.prototype.$timeago) {
+export const install = (app, opts) => {
+  if (app.config.globalProperties.$timeago) {
     return
   }
 
-  if (process.env.NODE_ENV === 'development' && !Vue.observable) {
-    console.warn(`[vue-timeago] Vue 2.6 or above is recommended.`)
+  if (process.env.NODE_ENV === 'development' && !app.version.startsWith('3')) {
+    console.warn(`[vue-timeago] Vue 3.0 or above is required.`)
   }
 
   const $timeago = {
     locale: opts.locale
   }
-  Vue.prototype.$timeago = Vue.observable
-    ? Vue.observable($timeago)
-    : new Vue({ data: $timeago })
+  app.config.globalProperties.$timeago = reactive($timeago)
 
   const Component = createTimeago(opts)
-  Vue.component(Component.name, Component)
+  app.component(Component.name, Component)
 }
 
 export const converter = defaultConverter
