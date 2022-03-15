@@ -45,7 +45,7 @@ export const createTimeago = (opts = {}) => {
       this.startUpdater()
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
       this.stopUpdater()
     },
 
